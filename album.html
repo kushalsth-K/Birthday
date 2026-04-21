@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Album ❤️</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Pinyon+Script&family=Raleway:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0c;
+    --cream: #e8dfd0;
+    --blush: #c9a89a;
+    --muted: #7a6e6e;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--cream);
+    font-family: 'Raleway', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.55;
+  }
+
+  /* ── HEADER ── */
+  header {
+    text-align: center;
+    padding: 90px 20px 60px;
+    position: relative;
+  }
+  header::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(to bottom, rgba(201,168,154,0.4), transparent);
+    margin: 40px auto 0;
+  }
+
+  .back-link {
+    position: absolute;
+    top: 36px; left: 36px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .back-link:hover { color: var(--blush); }
+  .back-link::before { content: '←'; font-size: 14px; }
+
+  .header-eyebrow {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 10px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+  .header-title {
+    font-family: 'Pinyon Script', cursive;
+    font-size: clamp(3rem, 8vw, 6rem);
+    color: var(--cream);
+    text-shadow: 0 0 40px rgba(201,168,154,0.3);
+  }
+  .header-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--muted);
+    font-size: 1rem;
+    letter-spacing: 2px;
+    margin-top: 12px;
+  }
+
+  /* ── SECTIONS ── */
+  .album-section {
+    padding: 60px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .album-section-header {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 48px;
+  }
+  .album-section-label {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 200;
+    font-size: 10px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .album-section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 1.6rem;
+    color: var(--cream);
+  }
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, rgba(201,168,154,0.2), transparent);
+  }
+
+  /* ── POLAROID GRID ── */
+  .photo-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 36px;
+    justify-content: center;
+    padding: 20px 10px 50px;
+  }
+
+  /* POLAROID CARD */
+  .photo-item {
+    background: #f5f0e8;
+    padding: 12px 12px 48px 12px;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.55), 0 2px 6px rgba(0,0,0,0.35);
+    cursor: pointer;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    position: relative;
+    width: 200px;
+    flex-shrink: 0;
+  }
+
+  /* natural scatter */
+  .photo-item:nth-child(4n+1) { transform: rotate(-2.5deg); }
+  .photo-item:nth-child(4n+2) { transform: rotate(1.8deg); }
+  .photo-item:nth-child(4n+3) { transform: rotate(-1.2deg); }
+  .photo-item:nth-child(4n+4) { transform: rotate(2.8deg); }
+
+  .photo-item:hover {
+    transform: rotate(0deg) scale(1.07) translateY(-8px) !important;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.65), 0 6px 14px rgba(0,0,0,0.45);
+    z-index: 10;
+  }
+
+  /* photo area — square */
+  .photo-inner {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: #1a1520;
+    position: relative;
+  }
+
+  .photo-inner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: saturate(0.7) brightness(0.9);
+    transition: filter 0.4s ease;
+  }
+  .photo-item:hover .photo-inner img {
+    filter: saturate(0.9) brightness(1.05);
+  }
+
+  /* handwritten caption */
+  .photo-caption {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 10px;
+  }
+  .photo-caption span {
+    font-family: 'Pinyon Script', cursive;
+    font-size: 1.15rem;
+    color: #5a4535;
+    text-align: center;
+  }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(201,168,154,0.15), transparent);
+  }
+
+  /* ── LIGHTBOX ── */
+  #lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(10,10,12,0.95);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+    backdrop-filter: blur(14px);
+  }
+  #lightbox.open { opacity: 1; visibility: visible; }
+
+  #lightbox-polaroid {
+    background: #f5f0e8;
+    padding: 16px 16px 68px 16px;
+    box-shadow: 0 24px 70px rgba(0,0,0,0.8);
+    transform: scale(0.9) rotate(-1deg);
+    transition: transform 0.4s ease;
+    position: relative;
+  }
+  #lightbox.open #lightbox-polaroid { transform: scale(1) rotate(0deg); }
+
+  #lightbox-img {
+    display: block;
+    max-width: min(72vw, 500px);
+    max-height: 62vh;
+    object-fit: contain;
+    filter: saturate(0.78);
+  }
+
+  #lightbox-caption {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Pinyon Script', cursive;
+    font-size: 1.6rem;
+    color: #5a4535;
+  }
+
+  #lightbox-close {
+    position: fixed;
+    top: 28px; right: 28px;
+    background: transparent;
+    border: 1px solid rgba(201,168,154,0.3);
+    color: var(--cream);
+    font-size: 18px;
+    width: 44px; height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  #lightbox-close:hover { border-color: var(--blush); color: var(--blush); }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 50px 20px;
+    border-top: 1px solid rgba(201,168,154,0.08);
+    margin-top: 60px;
+  }
+  footer p {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--muted);
+    letter-spacing: 2px;
+  }
+  footer span { color: var(--blush); }
+
+  /* ── FADE IN ── */
+  .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+  .photo-item { opacity: 0; transition: opacity 0.6s ease; }
+  .photo-item.visible { opacity: 1; }
+
+  @media (max-width: 600px) {
+    .album-section { padding: 40px 20px; }
+    .photo-grid { gap: 20px; justify-content: center; }
+    .back-link { top: 20px; left: 20px; }
+    .photo-item { width: 148px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- AUDIO -->
+<audio id="bg-audio" loop preload="auto">
+  <source src="photo.mp3" type="audio/mpeg">
+</audio>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" onclick="closeLightbox(event)">
+  <button id="lightbox-close" onclick="closeLightbox()">✕</button>
+  <div id="lightbox-polaroid">
+    <img id="lightbox-img" src="" alt="">
+    <div id="lightbox-caption"></div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <a href="index.html" class="back-link">back</a>
+  <p class="header-eyebrow">a little collection</p>
+  <h1 class="header-title">Her Album</h1>
+  <p class="header-sub">every picture tells a story</p>
+</header>
+<!-- ══ SECTION 02 — Her Childhood Photos (14–26) ══ -->
+<div class="album-section fade-in" style="margin-top: 20px;">
+  <div class="album-section-header">
+    <span class="album-section-label">02</span>
+    <h2 class="album-section-title">Her Childhood Photos</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="photo-grid">
+
+    <div class="photo-item" onclick="openLightbox(this)" data-caption="photo 14">
+      <div class="photo-inner"><img src="bday/21.jpg" alt="photo 14"></div>
+      <div class="photo-caption"><span>Her Fav</span></div>
+    </div>
+
+     <div class="photo-item" onclick="openLightbox(this)" data-caption="photo 14">
+      <div class="photo-inner"><img src="bday/22.jpg" alt="photo 14"></div>
+      <div class="photo-caption"><span>Guitarist pukulu</span></div>
+     </div>
+
+    <div class="photo-item" onclick="openLightbox(this)" data-caption="photo 14">
+      <div class="photo-inner"><img src="bday/23.jpg" alt="photo 14"></div>
+      <div class="photo-caption"><span>Maicha</span></div>
+    </div>
+
+    <div class="photo-item" onclick="openLightbox(this)" data-caption="photo 14">
+      <div class="photo-inner"><img src="bday/24.jpg" alt="photo 14"></div>
+      <div class="photo-caption"><span>Heppii puku</span></div>
+    </div>
+<!-- ══ SECTION 01 — Her Photos (1–13) ══ -->
+<div class="album-section fade-in">
+  <div class="album-section-header">
+    <span class="album-section-label">01</span>
+    <h2 class="album-section-title">Her Photos</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="photo-grid">
+
+    <div class="photo-item" onclick="openLightbox(this)" data-caption="photo 1">
+      <div class="photo-inner"><img src="bday/1.jpg" alt="photo 1"></div>
+      <div class="photo-caption"><span></span></div>
+    </div>
+
+    <div class="photo-item" onclick="openLightbox(this)" data-caption="photo 2">
+      <div class="photo-inner"><img src="bday/2.jpg" alt="photo 2"></div>
+      <div class="photo-caption"><span/span></div>
+    </div>
+
+    <div class="photo-item" onclick="openLightbox(this)" data-caption="photo 3">
+      <div class="photo-inner"><img src="bday/3.jpg" alt="photo 3"></div>
+      <div class="photo-caption"><span></span></div>
+    </div>
+
+    <div class="photo-item" onclick="openLightbox(this)" data-caption="photo 4">
+      <div class="photo-inner"><img src="bday/4.jpg" alt="photo 4"></div>
+      <div class="photo-caption"><span></span></div>
+    </div>
+
+    <div class="photo-item" onclick="openLightbox(this)" data-caption="photo 5">
+      <div class="photo-inner"><img src="bday/5.jpg" alt="photo 5"></div>
+      <div class="photo-caption"><span></span></div>
+    </div>
+
+    <div class="photo-item" onclick="openLightbox(this)" data-caption="photo 6">
+      <div class="photo-inner"><img src="bday/6.jpg" alt="photo 6"></div>
+      <div class="photo-caption"><span></span></div>
+    </div>
+
+    <div class="photo-item" onclick="openLightbox(this)" data-caption="photo 7">
+      <div class="photo-inner"><img src="bday/7.jpg" alt="photo 7"></div>
+      <div class="photo-caption"><span></span></div>
+    </div>
+
+    <div class="photo-item" onclick="openLightbox(this)" data-caption="photo 8">
+      <div class="photo-inner"><img src="bday/8.jpg" alt="photo 8"></div>
+      <div class="photo-caption"><span></span></div>
+    </div>
+
+    <div class="photo-item" onclick="openLightbox(this)" data-caption="photo 9">
+      <div class="photo-inner"><img src="bday/9.jpg" alt="photo 9"></div>
+      <div class="photo-caption"><span></span></div>
+    </div>
+
+    <div class="photo-item" onclick="openLightbox(this)" data-caption="photo 10">
+      <div class="photo-inner"><img src="bday/10.jpg" alt="photo 10"></div>
+      <div class="photo-caption"><span></span></div>
+    </div>
+
+    <div class="photo-item" onclick="openLightbox(this)" data-caption="photo 11">
+      <div class="photo-inner"><img src="bday/11.jpg" alt="photo 11"></div>
+      <div class="photo-caption"><span></span></div>
+    </div>
+
+    <div class="photo-item" onclick="openLightbox(this)" data-caption="photo 12">
+      <div class="photo-inner"><img src="bday/12.jpg" alt="photo 12"></div>
+      <div class="photo-caption"><span></span></div>
+    </div>
+
+    <div class="photo-item" onclick="openLightbox(this)" data-caption="photo 13">
+      <div class="photo-inner"><img src="bday/13.jpg" alt="photo 13"></div>
+      <div class="photo-caption"><span></span></div>
+    </div>
+<div class="photo-item" onclick="openLightbox(this)" data-caption="photo 13">
+      <div class="photo-inner"><img src="bday/14.jpg" alt="photo 13"></div>
+      <div class="photo-caption"><span></span></div>
+    </div>
+
+    <div class="photo-item" onclick="openLightbox(this)" data-caption="photo 13">
+      <div class="photo-inner"><img src="bday/15.jpg" alt="photo 13"></div>
+      <div class="photo-caption"><span></span></div>
+    </div>
+
+    <div class="photo-item" onclick="openLightbox(this)" data-caption="photo 13">
+      <div class="photo-inner"><img src="bday/16.jpg" alt="photo 13"></div>
+      <div class="photo-caption"><span></span></div>
+    </div>
+
+    <div class="photo-item" onclick="openLightbox(this)" data-caption="photo 13">
+      <div class="photo-inner"><img src="bday/17.jpg" alt="photo 13"></div>
+      <div class="photo-caption"><span></span></div>
+    </div>
+
+    <div class="photo-item" onclick="openLightbox(this)" data-caption="photo 13">
+      <div class="photo-inner"><img src="bday/18.jpg" alt="photo 13"></div>
+      <div class="photo-caption"><span></span></div>
+    </div>
+
+    <div class="photo-item" onclick="openLightbox(this)" data-caption="photo 13">
+      <div class="photo-inner"><img src="bday/19.jpg" alt="photo 13"></div>
+      <div class="photo-caption"><span></span></div>
+    </div>
+
+    <div class="photo-item" onclick="openLightbox(this)" data-caption="photo 13">
+      <div class="photo-inner"><img src="bday/20.jpg" alt="photo 13"></div>
+      <div class="photo-caption"><span></span></div>
+    </div>
+
+    <div class="photo-item" onclick="openLightbox(this)" data-caption="photo 13">
+      <div class="photo-inner"><img src="bday/25.jpg" alt="photo 13"></div>
+      <div class="photo-caption"><span></span></div>
+    </div>
+
+    <div class="photo-item" onclick="openLightbox(this)" data-caption="photo 13">
+      <div class="photo-inner"><img src="bday/26.jpg" alt="photo 13"></div>
+      <div class="photo-caption"><span></span></div>
+    </div>
+
+<div class="section-divider"></div>
+
+
+
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ══ SECTION 03 — Birthday (bday/) ══ -->
+
+
+<!-- FOOTER -->
+<footer>
+  <p>Thank you for Everything. <br>Made with <span>❤️</span> for you</p>
+</footer>
+
+<script>
+/* ── MUSIC ── */
+const audio = document.getElementById('bg-audio');
+audio.volume = 0.7;
+let musicStarted = false;
+function startMusic() {
+  if (musicStarted) return;
+  audio.play().then(() => { musicStarted = true; }).catch(() => {});
+}
+startMusic();
+['click','touchstart','keydown','scroll','mousemove'].forEach(evt => {
+  document.addEventListener(evt, startMusic, { once: true });
+});
+
+/* ── LIGHTBOX ── */
+function openLightbox(el) {
+  const img     = el.querySelector('img');
+  const caption = el.dataset.caption || '';
+  const lb      = document.getElementById('lightbox');
+  const lbImg   = document.getElementById('lightbox-img');
+  const lbCap   = document.getElementById('lightbox-caption');
+
+  lbImg.src = img ? img.src : '';
+  lbCap.textContent = caption;
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox(e) {
+  if (e && e.target !== document.getElementById('lightbox') && e.target !== document.getElementById('lightbox-close')) return;
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+});
+
+/* ── SCROLL FADE ── */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+
+document.querySelectorAll('.fade-in, .photo-item').forEach((el, i) => {
+  el.style.transitionDelay = `${i * 0.07}s`;
+  obs.observe(el);
+});
+</script>
+</body>
+</html>

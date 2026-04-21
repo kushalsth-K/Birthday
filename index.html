@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Happy Birthday ❤️</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Pinyon+Script&family=Raleway:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0c;
+    --deep: #0f0e14;
+    --cream: #e8dfd0;
+    --blush: #c9a89a;
+    --muted: #7a6e6e;
+    --glow: rgba(201,168,154,0.18);
+    --white: #f5f0ea;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--black); color: var(--cream); font-family: 'Raleway', sans-serif; font-weight: 300; overflow-x: hidden; cursor: crosshair; }
+
+  body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; opacity: 0.55; }
+
+  #particles { position: fixed; inset: 0; pointer-events: none; z-index: 1; }
+
+  /* ══ LANDING ══ */
+  #landing { position: fixed; inset: 0; z-index: 500; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; background: var(--black); transition: opacity 1.2s ease, visibility 1.2s ease; }
+  #landing.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+
+  .landing-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(90,60,70,0.35) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 20% 80%, rgba(60,40,60,0.25) 0%, transparent 60%); filter: blur(2px); }
+  .landing-bg-img { position: absolute; inset: 0; background-image: url('your-bg-image.jpg'); background-size: cover; background-position: center; opacity: 0.18; filter: blur(6px) saturate(0.5); }
+  .landing-content { position: relative; z-index: 2; animation: fadeUp 1.8s ease both; }
+  .title-row { position: relative; display: inline-block; }
+
+  .botanical { position: absolute; top: 50%; transform: translateY(-50%); width: 140px; opacity: 0; animation: fadeUp 2.2s 0.6s ease both; pointer-events: none; }
+  .botanical-left  { right: calc(100% + 10px); }
+  .botanical-right { left: calc(100% + 10px); transform: translateY(-50%) scaleX(-1); }
+  @media (max-width: 900px) { .botanical { width: 80px; } }
+  @media (max-width: 580px) { .botanical { display: none; } }
+
+  .landing-eyebrow { font-family: 'Raleway', sans-serif; font-weight: 200; font-size: 11px; letter-spacing: 6px; text-transform: uppercase; color: var(--muted); margin-bottom: 28px; animation: fadeUp 1.8s 0.2s ease both; }
+  .landing-title { font-family: 'Pinyon Script', cursive; font-size: clamp(4rem, 12vw, 9rem); color: var(--cream); line-height: 1; text-shadow: 0 0 60px rgba(201,168,154,0.4), 0 0 120px rgba(201,168,154,0.15); animation: fadeUp 1.8s 0.4s ease both, softPulse 4s 2s ease-in-out infinite; margin-bottom: 8px; }
+  .landing-sub { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-style: italic; font-size: clamp(1rem, 2.5vw, 1.4rem); color: var(--blush); letter-spacing: 2px; margin-bottom: 60px; animation: fadeUp 1.8s 0.6s ease both; }
+
+  .enter-btn { font-family: 'Raleway', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 5px; text-transform: uppercase; color: var(--cream); background: transparent; border: 1px solid rgba(201,168,154,0.4); padding: 14px 40px; cursor: pointer; transition: all 0.5s ease; animation: fadeUp 1.8s 0.9s ease both; position: relative; overflow: hidden; }
+  .enter-btn::before { content: ''; position: absolute; inset: 0; background: rgba(201,168,154,0.08); transform: scaleX(0); transform-origin: left; transition: transform 0.5s ease; }
+  .enter-btn:hover::before { transform: scaleX(1); }
+  .enter-btn:hover { border-color: var(--blush); color: var(--blush); letter-spacing: 7px; }
+
+  /* ══ MAIN ══ */
+  #main { opacity: 0; transition: opacity 1.2s ease 0.3s; }
+  #main.visible { opacity: 1; }
+
+  section { min-height: 100vh; padding: 100px 40px; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .section-label { font-family: 'Raleway', sans-serif; font-weight: 200; font-size: 10px; letter-spacing: 6px; text-transform: uppercase; color: var(--muted); margin-bottom: 20px; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2rem, 5vw, 3.5rem); color: var(--cream); text-align: center; margin-bottom: 16px; }
+
+  /* ══ WISH ══ */
+  #wish-section { background: radial-gradient(ellipse 70% 50% at 50% 60%, rgba(60,40,55,0.4) 0%, transparent 70%); }
+  .wish-intro { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.1rem; color: var(--muted); letter-spacing: 1px; margin-bottom: 60px; text-align: center; }
+
+  .envelope-wrapper { position: relative; width: 320px; cursor: pointer; margin: 0 auto; perspective: 600px; }
+  .envelope { width: 320px; height: 210px; position: relative; transition: transform 0.3s ease; }
+  .envelope-wrapper:hover .envelope { transform: scale(1.03); }
+  .env-body { position: absolute; bottom: 0; width: 100%; height: 180px; background: linear-gradient(160deg, #1a1520 0%, #241d2a 100%); border: 1px solid rgba(201,168,154,0.2); border-radius: 2px; z-index: 1; }
+  .env-flap { position: absolute; top: 0; left: 0; width: 100%; height: 120px; transform-origin: top center; transform: rotateX(0deg); transition: transform 0.8s cubic-bezier(0.4,0,0.2,1); z-index: 3; overflow: hidden; }
+  .env-flap-inner { width: 100%; height: 100%; clip-path: polygon(0 0, 100% 0, 50% 100%); background: linear-gradient(160deg, #211929 0%, #2d2035 100%); border-left: 1px solid rgba(201,168,154,0.2); border-right: 1px solid rgba(201,168,154,0.2); }
+  .env-flap.open { transform: rotateX(-180deg); transform-style: preserve-3d; z-index: 1; }
+  .env-lines { position: absolute; bottom: 0; width: 100%; height: 180px; overflow: hidden; z-index: 2; }
+  .env-lines::before, .env-lines::after { content: ''; position: absolute; bottom: 0; width: 50%; height: 100%; border: 1px solid rgba(201,168,154,0.12); }
+  .env-lines::before { left: 0; clip-path: polygon(0 100%, 100% 0, 100% 100%); }
+  .env-lines::after  { right: 0; clip-path: polygon(0 0, 100% 100%, 0 100%); }
+  .env-seal { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 20px; z-index: 4; transition: opacity 0.3s ease; }
+
+  .card-reveal { position: absolute; top: 50%; left: 50%; transform: translate(-50%, calc(-50% - 10px)); width: 290px; background: linear-gradient(145deg, #1c1625 0%, #231b2e 100%); border: 1px solid rgba(201,168,154,0.2); padding: 36px 30px; text-align: center; opacity: 0; z-index: 2; transition: opacity 0.8s ease 0.6s, transform 0.8s ease 0.6s; pointer-events: none; box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 40px rgba(201,168,154,0.05); }
+  .card-reveal.open { opacity: 1; transform: translate(-50%, calc(-50% - 100px)); pointer-events: auto; z-index: 5; }
+  .card-wish-title { font-family: 'Pinyon Script', cursive; font-size: 2.4rem; color: var(--blush); margin-bottom: 14px; text-shadow: 0 0 20px rgba(201,168,154,0.3); }
+  .card-wish-text { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-style: italic; font-size: 0.95rem; color: var(--cream); line-height: 1.9; letter-spacing: 0.5px; }
+  .card-signature { font-family: 'Pinyon Script', cursive; font-size: 1.6rem; color: var(--muted); margin-top: 18px; }
+  .open-wish-btn { margin-top: 50px; font-family: 'Raleway', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 5px; text-transform: uppercase; color: var(--cream); background: transparent; border: 1px solid rgba(201,168,154,0.35); padding: 13px 36px; cursor: pointer; transition: all 0.4s ease; display: block; margin-left: auto; margin-right: auto; }
+  .open-wish-btn:hover { border-color: var(--blush); color: var(--blush); }
+  .open-wish-btn.done { opacity: 0; pointer-events: none; }
+
+  /* ══ CAKE ══ */
+  #cake-section { background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(50,35,55,0.35) 0%, transparent 70%); }
+  .cake-container { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .cake-svg-wrap { width: 200px; height: 240px; position: relative; }
+  .flame { opacity: 0; transition: opacity 0.5s ease; transform-origin: 50% 100%; }
+  .flame.lit { opacity: 1; animation: flicker 1.5s ease-in-out infinite; }
+  .flame-glow { opacity: 0; transition: opacity 0.8s ease; }
+  .flame-glow.lit { opacity: 1; animation: glowPulse 2s ease-in-out infinite; }
+  .cake-note { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.9rem; color: var(--muted); letter-spacing: 1px; text-align: center; margin-top: 16px; opacity: 0; transition: opacity 1s ease 0.5s; }
+  .cake-note.show { opacity: 1; }
+
+  /* ══ FLOWERS — POLAROID STYLE ══ */
+  #flowers-section { background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(40,30,50,0.4) 0%, transparent 70%); }
+
+  .flowers-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    justify-content: center;
+    margin-top: 60px;
+    padding: 10px 10px 30px;
+  }
+
+  /* POLAROID CARD */
+  .flower-card {
+    background: #f5f0e8;
+    padding: 10px 10px 48px 10px;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.55), 0 2px 6px rgba(0,0,0,0.3);
+    cursor: default;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    position: relative;
+    width: 200px;
+    flex-shrink: 0;
+  }
+  .flower-card:nth-child(3n+1) { transform: rotate(-2.2deg); }
+  .flower-card:nth-child(3n+2) { transform: rotate(1.8deg); }
+  .flower-card:nth-child(3n+3) { transform: rotate(-1.2deg); }
+  .flower-card:hover {
+    transform: rotate(0deg) scale(1.07) translateY(-8px) !important;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.65), 0 6px 14px rgba(0,0,0,0.4);
+    z-index: 10;
+  }
+
+  .flower-photo {
+    width: 100%;
+    aspect-ratio: 3/4;
+    overflow: hidden;
+    background: linear-gradient(145deg, #161222 0%, #1e1728 100%);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .flower-photo img {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 0.8;
+    filter: saturate(0.65);
+    transition: filter 0.4s, opacity 0.4s;
+  }
+  .flower-card:hover .flower-photo img { filter: saturate(0.9); opacity: 0.95; }
+  .flower-photo-placeholder {
+    font-family: 'Raleway', sans-serif; font-weight: 200; font-size: 9px;
+    letter-spacing: 3px; text-transform: uppercase; color: rgba(120,90,80,0.35);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+  }
+  .flower-photo-placeholder .ph-big { font-size: 28px; }
+
+  .flower-label {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 48px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  }
+  .flower-name-script {
+    font-family: 'Pinyon Script', cursive;
+    font-size: 1.2rem;
+    color: #5a4535;
+  }
+  .flower-sub-text {
+    font-family: 'Raleway', sans-serif; font-weight: 200;
+    font-size: 8px; letter-spacing: 2px; text-transform: uppercase;
+    color: #8a7060;
+  }
+
+  /* ══ ALBUM SECTION ══ */
+  #album-section { min-height: 50vh; background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(55,35,55,0.3) 0%, transparent 70%); text-align: center; }
+  .album-btn { display: inline-block; margin-top: 40px; font-family: 'Raleway', sans-serif; font-weight: 300; font-size: 11px; letter-spacing: 5px; text-transform: uppercase; color: var(--cream); background: transparent; border: 1px solid rgba(201,168,154,0.35); padding: 16px 48px; text-decoration: none; transition: all 0.5s ease; position: relative; overflow: hidden; }
+  .album-btn::after { content: ''; position: absolute; inset: 0; background: rgba(201,168,154,0.06); transform: scaleX(0); transform-origin: left; transition: transform 0.5s ease; }
+  .album-btn:hover::after { transform: scaleX(1); }
+  .album-btn:hover { border-color: var(--blush); color: var(--blush); letter-spacing: 7px; }
+
+  footer { text-align: center; padding: 50px 20px; border-top: 1px solid rgba(201,168,154,0.08); }
+  footer p { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-style: italic; font-size: 0.9rem; color: var(--muted); letter-spacing: 2px; }
+  footer span { color: var(--blush); }
+
+  .divider { width: 1px; height: 80px; background: linear-gradient(to bottom, transparent, rgba(201,168,154,0.3), transparent); margin: 0 auto 60px; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes softPulse { 0%,100% { text-shadow: 0 0 60px rgba(201,168,154,0.4),0 0 120px rgba(201,168,154,0.15); } 50% { text-shadow: 0 0 80px rgba(201,168,154,0.6),0 0 160px rgba(201,168,154,0.25); } }
+  @keyframes flicker { 0%,100% { transform: scaleY(1) scaleX(1) rotate(-1deg); } 25% { transform: scaleY(1.04) scaleX(0.96) rotate(1.5deg); } 50% { transform: scaleY(0.96) scaleX(1.03) rotate(-0.5deg); } 75% { transform: scaleY(1.06) scaleX(0.97) rotate(1deg); } }
+  @keyframes glowPulse { 0%,100% { opacity: 0.5; } 50% { opacity: 0.9; } }
+
+  .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.9s ease, transform 0.9s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 700px) { section { padding: 80px 24px; } .envelope-wrapper, .envelope { width: 280px; } .card-reveal { width: 250px; } .flowers-grid { gap: 22px; } .flower-card { width: 155px; } }
+</style>
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+
+<audio id="bg-audio" loop autoplay>
+  <source src="touch.mp3" type="audio/mpeg">
+</audio>
+
+<!-- ══ LANDING ══ -->
+<div id="landing">
+  <div class="landing-bg"></div>
+  <div class="landing-bg-img"></div>
+  <div class="landing-content">
+    <p class="landing-eyebrow">a little something for you</p>
+    <div class="title-row">
+      <svg class="botanical botanical-left" viewBox="0 0 140 200" xmlns="http://www.w3.org/2000/svg">
+        <path d="M70 195 C68 160 65 130 62 100 C59 70 55 45 58 20" fill="none" stroke="#7a6e6e" stroke-width="1.2" stroke-linecap="round"/>
+        <ellipse cx="58" cy="18" rx="10" ry="8" fill="none" stroke="#c9a89a" stroke-width="1"/>
+        <ellipse cx="58" cy="18" rx="7" ry="5" fill="none" stroke="#c9a89a" stroke-width="0.8"/>
+        <ellipse cx="58" cy="18" rx="4" ry="3" fill="none" stroke="#c9a89a" stroke-width="0.7"/>
+        <path d="M48 16 C44 10 46 4 52 6 C50 12 54 15 58 14" fill="none" stroke="#c9a89a" stroke-width="0.9"/>
+        <path d="M68 16 C72 10 70 4 64 6 C66 12 62 15 58 14" fill="none" stroke="#c9a89a" stroke-width="0.9"/>
+        <path d="M55 26 C50 30 48 36 52 38 C54 32 57 28 58 27" fill="none" stroke="#c9a89a" stroke-width="0.9"/>
+        <path d="M61 26 C66 30 68 36 64 38 C62 32 59 28 58 27" fill="none" stroke="#c9a89a" stroke-width="0.9"/>
+        <path d="M62 55 C50 48 38 50 36 62 C48 60 58 60 62 55Z" fill="none" stroke="#7a6e6e" stroke-width="0.9"/>
+        <path d="M62 55 C54 56 46 60 40 64" fill="none" stroke="#7a6e6e" stroke-width="0.5" stroke-dasharray="2,2"/>
+        <path d="M65 75 C61 68 56 65 53 68 C55 72 60 76 65 75Z" fill="none" stroke="#c9a89a" stroke-width="0.9"/>
+        <path d="M60 100 C72 92 84 94 86 106 C74 104 64 104 60 100Z" fill="none" stroke="#7a6e6e" stroke-width="0.9"/>
+        <circle cx="40" cy="120" r="2" fill="none" stroke="#c9a89a" stroke-width="0.8"/>
+        <circle cx="35" cy="115" r="1.5" fill="none" stroke="#c9a89a" stroke-width="0.7"/>
+        <circle cx="45" cy="113" r="1.5" fill="none" stroke="#c9a89a" stroke-width="0.7"/>
+        <path d="M64 145 C52 138 40 140 38 152 C50 150 60 150 64 145Z" fill="none" stroke="#7a6e6e" stroke-width="0.9"/>
+        <path d="M66 170 C62 163 57 160 54 163 C56 167 61 171 66 170Z" fill="none" stroke="#c9a89a" stroke-width="0.8"/>
+        <path d="M70 195 C66 180 60 170 55 165" fill="none" stroke="#7a6e6e" stroke-width="0.7"/>
+        <path d="M70 195 C72 178 78 168 82 162" fill="none" stroke="#7a6e6e" stroke-width="0.7"/>
+      </svg>
+      <h1 class="landing-title">Happy Birthday</h1>
+      <svg class="botanical botanical-right" viewBox="0 0 140 200" xmlns="http://www.w3.org/2000/svg">
+        <path d="M70 195 C68 160 65 130 62 100 C59 70 55 45 58 20" fill="none" stroke="#7a6e6e" stroke-width="1.2" stroke-linecap="round"/>
+        <ellipse cx="58" cy="18" rx="10" ry="8" fill="none" stroke="#c9a89a" stroke-width="1"/>
+        <ellipse cx="58" cy="18" rx="7" ry="5" fill="none" stroke="#c9a89a" stroke-width="0.8"/>
+        <ellipse cx="58" cy="18" rx="4" ry="3" fill="none" stroke="#c9a89a" stroke-width="0.7"/>
+        <path d="M48 16 C44 10 46 4 52 6 C50 12 54 15 58 14" fill="none" stroke="#c9a89a" stroke-width="0.9"/>
+        <path d="M68 16 C72 10 70 4 64 6 C66 12 62 15 58 14" fill="none" stroke="#c9a89a" stroke-width="0.9"/>
+        <path d="M55 26 C50 30 48 36 52 38 C54 32 57 28 58 27" fill="none" stroke="#c9a89a" stroke-width="0.9"/>
+        <path d="M61 26 C66 30 68 36 64 38 C62 32 59 28 58 27" fill="none" stroke="#c9a89a" stroke-width="0.9"/>
+        <path d="M62 55 C50 48 38 50 36 62 C48 60 58 60 62 55Z" fill="none" stroke="#7a6e6e" stroke-width="0.9"/>
+        <path d="M65 75 C61 68 56 65 53 68 C55 72 60 76 65 75Z" fill="none" stroke="#c9a89a" stroke-width="0.9"/>
+        <path d="M60 100 C72 92 84 94 86 106 C74 104 64 104 60 100Z" fill="none" stroke="#7a6e6e" stroke-width="0.9"/>
+        <circle cx="40" cy="120" r="2" fill="none" stroke="#c9a89a" stroke-width="0.8"/>
+        <circle cx="35" cy="115" r="1.5" fill="none" stroke="#c9a89a" stroke-width="0.7"/>
+        <circle cx="45" cy="113" r="1.5" fill="none" stroke="#c9a89a" stroke-width="0.7"/>
+        <path d="M64 145 C52 138 40 140 38 152 C50 150 60 150 64 145Z" fill="none" stroke="#7a6e6e" stroke-width="0.9"/>
+        <path d="M66 170 C62 163 57 160 54 163 C56 167 61 171 66 170Z" fill="none" stroke="#c9a89a" stroke-width="0.8"/>
+        <path d="M70 195 C66 180 60 170 55 165" fill="none" stroke="#7a6e6e" stroke-width="0.7"/>
+        <path d="M70 195 C72 178 78 168 82 162" fill="none" stroke="#7a6e6e" stroke-width="0.7"/>
+      </svg>
+    </div>
+    <p class="landing-sub">❤️ &nbsp;with all the love in the world&nbsp; ❤️</p>
+    <button class="enter-btn" onclick="enterSite()">Enter</button>
+  </div>
+</div>
+
+<!-- ══ MAIN ══ -->
+<div id="main">
+
+  <!-- WISH -->
+  <section id="wish-section">
+    <p class="section-label fade-in">for you</p>
+    <h2 class="section-title fade-in">A Wish, Sealed With Love</h2>
+    <p class="wish-intro fade-in">click the envelope to open your birthday wish</p>
+    <div class="envelope-wrapper fade-in" onclick="openWish()" id="envelope-wrap">
+      <div class="card-reveal" id="wish-card">
+        <div class="card-wish-title">Happy Birthday, Subu</div>
+        <p class="card-wish-text">
+          Happiest birthday dear SUBU, I wish you daaaa besttt birthdayyyyy❤️. I pray this birthday brings you all the 
+          the happiness and joy. Thank you for being da best. I hope we twin
+          forever no matter what. Thank you for being there for me all the time. Thank
+          you for listening to all my yaps :P. You da best HG :P 
+        </p>
+        <div class="card-signature">With love, your Kushu.❤️</div>
+      </div>
+      <div class="envelope" id="envelope">
+        <div class="env-flap" id="env-flap"><div class="env-flap-inner"></div></div>
+        <div class="env-body"><div class="env-lines"></div></div>
+        <div class="env-seal" id="env-seal">❤️</div>
+      </div>
+    </div>
+    <button class="open-wish-btn" id="open-wish-btn" onclick="openWish()">Open Your Wish</button>
+  </section>
+
+  <!-- CAKE -->
+  <section id="cake-section">
+    <div class="divider"></div>
+    <p class="section-label fade-in">make a wish</p>
+    <h2 class="section-title fade-in">Blow Out The Candle</h2>
+    <div class="cake-container fade-in">
+      <svg class="cake-svg-wrap" viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg" id="cake-svg">
+        <defs>
+          <radialGradient id="cakeGlow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#c9a89a" stop-opacity="0.4"/><stop offset="100%" stop-color="#c9a89a" stop-opacity="0"/></radialGradient>
+          <radialGradient id="flameGrad" cx="50%" cy="30%" r="60%"><stop offset="0%" stop-color="#fff5c0"/><stop offset="40%" stop-color="#f5a623"/><stop offset="100%" stop-color="#c0392b" stop-opacity="0.6"/></radialGradient>
+        </defs>
+        <circle class="flame-glow" cx="100" cy="44" r="18" fill="url(#cakeGlow)" id="flame-glow"/>
+        <rect x="30" y="158" width="140" height="56" rx="4" fill="#2a1f35"/>
+        <rect x="30" y="155" width="140" height="10" rx="3" fill="#3a2a45"/>
+        <ellipse cx="55" cy="155" rx="7" ry="5" fill="#e8dfd0" opacity="0.18"/>
+        <ellipse cx="85" cy="153" rx="6" ry="5" fill="#e8dfd0" opacity="0.15"/>
+        <ellipse cx="115" cy="155" rx="7" ry="5" fill="#e8dfd0" opacity="0.18"/>
+        <ellipse cx="145" cy="153" rx="6" ry="4" fill="#e8dfd0" opacity="0.14"/>
+        <rect x="55" y="108" width="90" height="50" rx="3" fill="#231829"/>
+        <rect x="55" y="105" width="90" height="10" rx="3" fill="#33223f"/>
+        <ellipse cx="75" cy="105" rx="6" ry="4" fill="#e8dfd0" opacity="0.15"/>
+        <ellipse cx="100" cy="103" rx="6" ry="4" fill="#e8dfd0" opacity="0.14"/>
+        <ellipse cx="125" cy="105" rx="6" ry="4" fill="#e8dfd0" opacity="0.15"/>
+        <circle cx="65" cy="130" r="3" fill="#c9a89a" opacity="0.35"/>
+        <circle cx="80" cy="125" r="2" fill="#c9a89a" opacity="0.25"/>
+        <circle cx="100" cy="130" r="3" fill="#c9a89a" opacity="0.35"/>
+        <circle cx="120" cy="125" r="2" fill="#c9a89a" opacity="0.25"/>
+        <circle cx="135" cy="130" r="3" fill="#c9a89a" opacity="0.35"/>
+        <rect x="94" y="72" width="12" height="36" rx="2" fill="#4a3555"/>
+        <line x1="100" y1="72" x2="100" y2="68" stroke="#8a7560" stroke-width="1.5" stroke-linecap="round"/>
+        <g class="flame" id="candle-flame">
+          <ellipse cx="100" cy="56" rx="6" ry="12" fill="url(#flameGrad)" opacity="0.95"/>
+          <ellipse cx="100" cy="60" rx="3" ry="6" fill="#fff5c0" opacity="0.8"/>
+        </g>
+      </svg>
+      <p class="cake-note" id="cake-note">✦ &nbsp; light in the dark &nbsp; ✦</p>
+    </div>
+  </section>
+
+  <!-- FLOWERS — POLAROID -->
+  <section id="flowers-section">
+    <div class="divider"></div>
+    <p class="section-label fade-in">blooming for you</p>
+    <h2 class="section-title fade-in">Her Favourite Flowers</h2>
+    <p class="wish-intro fade-in" style="margin-bottom:0">a little garden, just for you</p>
+
+    <div class="flowers-grid">
+
+      <div class="flower-card fade-in">
+        <div class="flower-photo">
+          <!-- <img src="lily1.jpg" alt="lily"> -->
+          <div class="flower-photo-placeholder"><div class="ph-big"><img src="lily1.png" alt=""></div><span>add image</span></div>
+        </div>
+        <div class="flower-label">
+          <span class="flower-name-script">Lily</span>
+          <span class="flower-sub-text">pure &amp; radiant</span>
+        </div>
+      </div>
+
+      <div class="flower-card fade-in">
+        <div class="flower-photo">
+          <!-- <img src="babysbreath.jpg" alt="baby's breath"> -->
+          <div class="flower-photo-placeholder"><div class="ph-big"><img src="fl2.png" alt=""></div><span>add image</span></div>
+        </div>
+        <div class="flower-label">
+          <span class="flower-name-script">Gypsy</span>
+          <span class="flower-sub-text">soft &amp; tender</span>
+        </div>
+      </div>
+
+      <div class="flower-card fade-in">
+        <div class="flower-photo">
+          <!-- <img src="rose.jpg" alt="rose"> -->
+          <div class="flower-photo-placeholder"><div class="ph-big"><img src="rose.png" alt=""></div><span>add image</span></div>
+        </div>
+        <div class="flower-label">
+          <span class="flower-name-script">Rose</span>
+          <span class="flower-sub-text">timeless &amp; deep</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ALBUM -->
+  <section id="album-section">
+    <div class="divider"></div>
+    <p class="section-label fade-in">memories</p>
+    <h2 class="section-title fade-in">Your Album</h2>
+    <p class="wish-intro fade-in">every moment, carefully kept</p>
+    <a href="album.html" class="album-btn fade-in">View Album</a>
+  </section>
+
+  <footer><p>made with <span>❤️</span> for you</p></footer>
+
+</div>
+
+<script>
+/* PARTICLES */
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let particles = [];
+function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+function createParticle() {
+  return { x: Math.random() * canvas.width, y: canvas.height + 10, size: Math.random() * 8 + 4, speed: Math.random() * 0.6 + 0.3, opacity: Math.random() * 0.5 + 0.2, drift: (Math.random() - 0.5) * 0.4, char: Math.random() > 0.5 ? '♡' : '·', color: Math.random() > 0.6 ? '#c9a89a' : '#7a6e6e' };
+}
+for (let i = 0; i < 18; i++) { let p = createParticle(); p.y = Math.random() * canvas.height; particles.push(p); }
+function animateParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach((p, i) => {
+    ctx.globalAlpha = p.opacity; ctx.fillStyle = p.color; ctx.font = `${p.size}px serif`; ctx.fillText(p.char, p.x, p.y);
+    p.y -= p.speed; p.x += p.drift; p.opacity -= 0.0008;
+    if (p.y < -20 || p.opacity <= 0) particles[i] = createParticle();
+  });
+  ctx.globalAlpha = 1; requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
+/* AUDIO */
+const audio = document.getElementById('bg-audio');
+audio.volume = 0;
+function fadeVolume(a, from, to, dur) {
+  const steps = 40; const step = (to - from) / steps; let count = 0; a.volume = from;
+  const iv = setInterval(() => {
+    let v = a.volume + step;
+    if ((step > 0 && v >= to) || (step < 0 && v <= to)) { a.volume = to; clearInterval(iv); }
+    else { a.volume = v; }
+    if (++count >= steps) clearInterval(iv);
+  }, dur / steps);
+}
+audio.play().then(() => { fadeVolume(audio, 0, 0.22, 2500); }).catch(() => {
+  function tryPlay() {
+    audio.play().then(() => { fadeVolume(audio, 0, 0.22, 2500); }).catch(() => {});
+    ['mousemove','touchstart','touchmove','keydown','scroll'].forEach(e => document.removeEventListener(e, tryPlay));
+  }
+  ['mousemove','touchstart','touchmove','keydown','scroll'].forEach(e => document.addEventListener(e, tryPlay));
+});
+
+/* ENTER */
+function enterSite() {
+  const a = document.getElementById('bg-audio');
+  if (a.paused) { a.play().then(() => fadeVolume(a, 0, 0.22, 2500)).catch(() => {}); }
+  document.getElementById('landing').classList.add('hidden');
+  document.getElementById('main').classList.add('visible');
+  triggerScrollFadeIns();
+}
+
+/* WISH */
+let wishOpened = false;
+function openWish() {
+  if (wishOpened) return; wishOpened = true;
+  document.getElementById('env-flap').classList.add('open');
+  document.getElementById('env-seal').style.opacity = '0';
+  setTimeout(() => { document.getElementById('wish-card').classList.add('open'); }, 400);
+  setTimeout(() => {
+    document.getElementById('candle-flame').classList.add('lit');
+    document.getElementById('flame-glow').classList.add('lit');
+    document.getElementById('cake-note').classList.add('show');
+  }, 900);
+  document.getElementById('open-wish-btn').classList.add('done');
+}
+
+/* SCROLL FADE */
+function triggerScrollFadeIns() {
+  const obs = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.15 });
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+}
+</script>
+</body>
+</html>
